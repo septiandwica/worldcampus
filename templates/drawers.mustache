@@ -1,0 +1,47 @@
+{{> theme_worldcampus/head }}
+<body {{{ bodyattributes }}}>
+    {{{ output.standard_top_of_body_html }}}
+
+    <!-- Top Navigation -->
+    {{> theme_worldcampus/navbar }}
+
+    <!-- Main Container -->
+    <main id="page-wrapper" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb / Header notifications -->
+        <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-1">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                    {{{ output.page_heading }}}
+                </h1>
+                <div class="text-sm text-slate-400">
+                    {{{ output.navbar }}}
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                {{{ output.page_heading_button }}}
+            </div>
+        </div>
+
+        <!-- Layout Grid: Main Content & Sidebar -->
+        <div class="grid grid-cols-1 {{#hasblocks}}lg:grid-cols-12 gap-8{{/hasblocks}}">
+            <!-- Main Content Region -->
+            <div class="{{#hasblocks}}lg:col-span-8 xl:col-span-9{{/hasblocks}} {{^hasblocks}}w-full{{/hasblocks}} space-y-6">
+                {{{ output.main_content }}}
+            </div>
+
+            <!-- Sidebar Blocks Region -->
+            {{#hasblocks}}
+            <aside class="lg:col-span-4 xl:col-span-3 space-y-6">
+                {{{ sidepreblocks }}}
+            </aside>
+            {{/hasblocks}}
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    {{> theme_worldcampus/footer }}
+
+    {{{ output.standard_after_main_region_html }}}
+    {{{ output.standard_end_of_body_html }}}
+</body>
+</html>

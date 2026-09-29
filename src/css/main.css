@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --color-world-bg: #0B0F19;
+  --color-world-card: #111827;
+  --color-world-border: #1F2937;
+  --color-world-cyan: #06B6D4;
+  --color-world-indigo: #6366F1;
+  --color-world-blue: #3B82F6;
+  --color-world-emerald: #10B981;
+}
+
+/* Custom Design Tokens & Effects */
+@layer utilities {
+  .world-gradient-text {
+    background: linear-gradient(135deg, #38BDF8 0%, #818CF8 50%, #C084FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .world-gradient-primary {
+    background: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+  }
+
+  .world-gradient-accent {
+    background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+  }
+
+  .glass-card {
+    background: rgba(17, 24, 39, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card-light {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+  }
+
+  .glass-navbar {
+    background: rgba(11, 15, 25, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.35);
+  }
+
+  .glow-indigo {
+    box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
+  }
+
+  .world-grid-bg {
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  }
+}
+
+/* Import Moodle Core Compatibility Styling */
+@import "./moodle-core.css";

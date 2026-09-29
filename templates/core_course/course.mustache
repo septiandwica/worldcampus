@@ -1,0 +1,62 @@
+{{> theme_worldcampus/head }}
+<body {{{ bodyattributes }}}>
+    {{{ output.standard_top_of_body_html }}}
+
+    {{> theme_worldcampus/navbar }}
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        <!-- Course Header Banner -->
+        <div class="glass-card p-6 sm:p-8 rounded-2xl border-slate-800/80 world-grid-bg relative overflow-hidden">
+            <div class="relative z-10 space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                        Course Code: {{course_shortname}}
+                    </div>
+
+                    <!-- Teacher / Admin Edit Mode Toggle -->
+                    <div class="flex items-center gap-3">
+                        <a href="{{{ edit_url }}}" class="px-4 py-2 rounded-xl {{#isediting}}bg-rose-600/90 text-white{{/isediting}}{{^isediting}}bg-slate-800 text-slate-200 hover:bg-slate-700{{/isediting}} text-xs font-bold transition-all flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            {{#isediting}}Turn Editing Off{{/isediting}}{{^isediting}}Turn Editing On{{/isediting}}
+                        </a>
+                    </div>
+                </div>
+
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    {{course_fullname}}
+                </h1>
+
+                <p class="text-sm text-slate-300 max-w-3xl leading-relaxed">
+                    {{course_summary}}
+                </p>
+
+                <!-- Course Progress Bar -->
+                <div class="pt-2 max-w-md space-y-2">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-400 font-medium">Your Completion Progress</span>
+                        <span class="text-cyan-400 font-bold">{{course_progress}}%</span>
+                    </div>
+                    <div class="w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden">
+                        <div class="world-gradient-accent h-2.5 rounded-full transition-all duration-500" style="width: {{course_progress}}%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Navigation / Secondary Menu (Grades, Participants, Settings) -->
+        <div class="border-b border-slate-800/80 pb-3">
+            {{{ output.navbar }}}
+        </div>
+
+        <!-- Course Topic & Content Sections (Rendered by Moodle course format) -->
+        <div class="space-y-6">
+            {{{ output.main_content }}}
+        </div>
+    </main>
+
+    {{> theme_worldcampus/footer }}
+
+    {{{ output.standard_end_of_body_html }}}
+</body>
+</html>
