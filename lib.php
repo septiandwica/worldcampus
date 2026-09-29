@@ -30,8 +30,12 @@ defined('MOODLE_INTERNAL') || die();
  * @param moodle_page $page
  */
 function theme_worldcampus_page_init(moodle_page $page) {
-    // Add Google Fonts for modern typography
-    $page->requires->css(new moodle_url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap'));
+    global $CFG;
+    // Add Google Fonts
+    $page->requires->css(new moodle_url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700;800&display=swap'));
+    
+    // Direct link to compiled World Campus Tailwind & Shadcn stylesheet
+    $page->requires->css(new moodle_url('/theme/worldcampus/style/worldcampus.css'));
 }
 
 /**
