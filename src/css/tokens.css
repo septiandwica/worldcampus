@@ -1,61 +1,95 @@
 /* ==========================================================================
-   World Campus Design Tokens: Light & Dark Modes
+   World Campus Design Tokens: pjj_world Palette for Light & Dark Modes
    ========================================================================== */
 
 :root,
 [data-theme="light"] {
-  --bg-primary: #F8FAFC;
-  --bg-secondary: #FFFFFF;
-  --bg-card: #FFFFFF;
-  --bg-elevated: #F1F5F9;
-  --bg-input: #FFFFFF;
-  --border-subtle: #E2E8F0;
-  --border-focus: #0EA5E9;
-  --border-glass: rgba(226, 232, 240, 0.8);
+  /* pjj_world Authentic Palette */
+  --navy-950: #05234a;
+  --navy-900: #07366c;
+  --navy-800: #0b477f;
+  --navy-700: #155991;
+  --ink: #102b52;
+  --muted-color: #68758a;
+  --line: #dfe5ec;
+  --paper: #ffffff;
+  --canvas: #f5f6f8;
+  --red: #ed171c;
+  --red-dark: #cb1017;
+  --soft-blue: #eef4fb;
+  --soft-red: #fff0f0;
+  --green: #16815d;
+
+  /* Theme semantic mappings */
+  --bg-primary: #f5f6f8;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-elevated: #eef4fb;
+  --bg-input: #ffffff;
+  --border-subtle: #dfe5ec;
+  --border-focus: #07366c;
+  --border-glass: rgba(223, 229, 236, 0.9);
   
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #94A3B8;
-  --text-inverse: #FFFFFF;
+  --text-primary: #102b52;
+  --text-secondary: #68758a;
+  --text-muted: #8c9ba5;
+  --text-inverse: #ffffff;
 
-  --accent-cyan: #0284C7;
-  --accent-indigo: #4F46E5;
-  --accent-emerald: #059669;
-  --accent-rose: #E11D48;
-  --accent-amber: #D97706;
+  --accent-cyan: #0b477f;
+  --accent-indigo: #07366c;
+  --accent-red: #ed171c;
+  --accent-emerald: #16815d;
+  --accent-amber: #d97706;
 
-  --glass-bg: rgba(255, 255, 255, 0.9);
-  --glass-border: rgba(226, 232, 240, 0.9);
-  --navbar-bg: rgba(255, 255, 255, 0.92);
-  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
-  --shadow-elevated: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --glass-bg: rgba(255, 255, 255, 0.92);
+  --glass-border: rgba(223, 229, 236, 0.9);
+  --navbar-bg: rgba(255, 255, 255, 0.96);
+  --shadow-card: 0 4px 18px -2px rgba(5, 35, 74, 0.06), 0 2px 6px -1px rgba(5, 35, 74, 0.03);
+  --shadow-elevated: 0 16px 30px -5px rgba(5, 35, 74, 0.12), 0 6px 12px -3px rgba(5, 35, 74, 0.05);
 }
 
 [data-theme="dark"],
 .dark {
-  --bg-primary: #0B0F19;
-  --bg-secondary: #111827;
-  --bg-card: #111827;
-  --bg-elevated: #1F2937;
-  --bg-input: #0F172A;
-  --border-subtle: #1F2937;
-  --border-focus: #06B6D4;
+  /* pjj_world Deep Navy Dark Palette */
+  --navy-950: #03142c;
+  --navy-900: #05234a;
+  --navy-800: #07366c;
+  --navy-700: #0b477f;
+  --ink: #f0f4f8;
+  --muted-color: #94a3b8;
+  --line: #123765;
+  --paper: #05234a;
+  --canvas: #03142c;
+  --red: #ff3338;
+  --red-dark: #ed171c;
+  --soft-blue: #072e5c;
+  --soft-red: #35080b;
+  --green: #22c55e;
+
+  /* Theme semantic mappings */
+  --bg-primary: #03142c;
+  --bg-secondary: #05234a;
+  --bg-card: #072a56;
+  --bg-elevated: #0b3b72;
+  --bg-input: #041b38;
+  --border-subtle: #123765;
+  --border-focus: #38bdf8;
   --border-glass: rgba(255, 255, 255, 0.08);
 
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --text-inverse: #0F172A;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #03142c;
 
-  --accent-cyan: #06B6D4;
-  --accent-indigo: #6366F1;
-  --accent-emerald: #10B981;
-  --accent-rose: #F43F5E;
-  --accent-amber: #F59E0B;
+  --accent-cyan: #38bdf8;
+  --accent-indigo: #818cf8;
+  --accent-red: #ff4d52;
+  --accent-emerald: #22c55e;
+  --accent-amber: #fbbf24;
 
-  --glass-bg: rgba(17, 24, 39, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --navbar-bg: rgba(11, 15, 25, 0.88);
-  --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
-  --shadow-elevated: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  --glass-bg: rgba(7, 42, 86, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --navbar-bg: rgba(5, 35, 74, 0.92);
+  --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.45);
+  --shadow-elevated: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
 }

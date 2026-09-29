@@ -1,0 +1,71 @@
+{{!
+    @template theme_worldcampus/core_course/coursecard
+    This template renders a rich World Campus course card accommodating all Moodle sub-components.
+}}
+<div class="card dashboard-card" role="listitem"
+    data-region="course-content"
+    data-course-id="{{{id}}}">
+    <a href="{{viewurl}}" tabindex="-1" class="d-block overflow-hidden rounded-t-2xl">
+        <div class="dashboard-card-img" style='{{#courseimage}}background-image: url("{{{courseimage}}}");{{/courseimage}}'>
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="course-category">
+                    {{$coursecategory}}{{/coursecategory}}
+                </div>
+                {{> core_course/favouriteicon }}
+            </div>
+            <span class="sr-only">{{fullname}}</span>
+        </div>
+    </a>
+
+    <div class="card-body course-info-container" id="course-info-container-{{id}}-{{uniqid}}">
+        <div class="w-100">
+            {{#showshortname}}
+                <div class="text-xs text-cyan-500 font-bold uppercase tracking-wider mb-1">
+                    <span class="sr-only">{{#str}}aria:courseshortname, core_course{{/str}}</span>
+                    {{{shortname}}}
+                    {{$divider}}{{/divider}}
+                </div>
+            {{/showshortname}}
+
+            <a href="{{viewurl}}" class="coursename line-clamp-2">
+                <span class="sr-only">{{#str}}aria:coursename, core_course{{/str}}</span>
+                {{$coursename}}{{fullname}}{{/coursename}}
+            </a>
+
+            {{#summary}}
+                <p class="course-summary">{{{summary}}}</p>
+            {{/summary}}
+
+            {{^visible}}
+                <div class="d-flex flex-wrap mt-1">
+                    <span class="badge bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs">{{#str}} hiddenfromstudents {{/str}}</span>
+                </div>
+            {{/visible}}
+        </div>
+
+        <div class="w-100 mt-3 pt-3 border-t border-slate-700/40">
+            {{#hasprogress}}
+                <div class="course-progress-wrapper">
+                    <div class="d-flex justify-content-between text-xs font-semibold mb-1">
+                        <span class="text-slate-400">Progress</span>
+                        <span class="text-cyan-400">{{progress}}%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{progress}}%;" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            {{/hasprogress}}
+            {{$progress}}{{/progress}}
+        </div>
+    </div>
+
+    <div class="dashboard-card-footer">
+        <a href="{{viewurl}}" class="px-3.5 py-1.5 rounded-lg bg-navy-800 hover:bg-red text-white text-xs font-bold transition-all inline-flex items-center gap-1.5 shadow-sm">
+            <span>Enter Course</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+        <div class="card-action-menu">
+            {{$menu}}{{/menu}}
+        </div>
+    </div>
+</div>

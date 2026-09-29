@@ -1,0 +1,186 @@
+/* ==========================================================================
+   World Campus Course Cards & MyOverview Block Styling (pjj_world aesthetic)
+   ========================================================================== */
+
+/* Course Grid Container */
+.dashboard-card-deck,
+.courses-view-course-item,
+[data-region="courses-view"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+/* Individual Course Card */
+.dashboard-card,
+.card.dashboard-card,
+.course-card-item {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 1.25rem !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-card) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  position: relative;
+  height: 100%;
+  padding: 0 !important;
+}
+
+.dashboard-card:hover,
+.course-card-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-cyan) !important;
+  box-shadow: var(--shadow-elevated) !important;
+}
+
+/* Course Image Header */
+.dashboard-card-img {
+  height: 160px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--navy-900);
+  background-image: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.dashboard-card-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5, 35, 74, 0.8) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Course Category & Status Badges on Image */
+.course-category,
+.dashboard-card-img .badge {
+  position: relative;
+  z-index: 2;
+  align-self: flex-start;
+  background: rgba(5, 35, 74, 0.75) !important;
+  backdrop-filter: blur(8px);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Favorite Star Button */
+.btn-favourite,
+.favourite-icon {
+  position: relative;
+  z-index: 2;
+  color: #fbbf24 !important;
+  transition: transform 0.2s ease;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-favourite:hover {
+  transform: scale(1.2);
+}
+
+/* Card Body & Course Info */
+.course-info-container,
+.dashboard-card .card-body {
+  padding: 1.25rem !important;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: transparent !important;
+}
+
+.coursename,
+.dashboard-card .coursename {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  line-height: 1.4 !important;
+  margin-bottom: 0.5rem;
+  display: block;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.coursename:hover {
+  color: var(--accent-cyan) !important;
+}
+
+.course-summary,
+.dashboard-card .summary {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Course Progress Bar & Completion Badge */
+.dashboard-card .progress,
+.course-progress-wrapper .progress {
+  height: 0.5rem !important;
+  border-radius: 9999px !important;
+  background-color: var(--bg-elevated) !important;
+  overflow: hidden;
+  margin: 0.75rem 0 0.5rem 0;
+}
+
+.dashboard-card .progress-bar,
+.course-progress-wrapper .progress-bar {
+  background: linear-gradient(135deg, var(--red) 0%, var(--navy-700) 100%) !important;
+  border-radius: 9999px;
+  transition: width 0.6s ease;
+}
+
+/* Card Action Footer */
+.dashboard-card-footer,
+.dashboard-card .card-footer {
+  padding: 0.875rem 1.25rem !important;
+  border-top: 1px solid var(--border-subtle) !important;
+  background: var(--bg-elevated) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+/* MyOverview Filter & Controls Bar */
+.block-myoverview .filters,
+[data-region="filter"] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+}
+
+.block-myoverview .dropdown-toggle {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+  border-radius: 0.625rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}

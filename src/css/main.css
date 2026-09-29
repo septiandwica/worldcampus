@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Design Tokens & Theme Variables */
+/* Design Tokens & Authentic pjj_world Palette */
 @import "./tokens.css";
 
 /* Structural Grid & Flexbox Compatibility for Moodle Core */
@@ -18,13 +18,21 @@
 /* Breadcrumbs, Buttons, Tables & Dropdowns */
 @import "./moodle-components.css";
 
+/* Rich Course Cards & MyOverview Block Styling */
+@import "./moodle-coursecards.css";
+
 /* Global Base Resets */
 body {
-  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
   transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'DM Sans', 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.02em;
 }
 
 a {
@@ -37,20 +45,20 @@ a:hover {
   color: var(--accent-indigo);
 }
 
-/* Custom Design Utilities */
+/* Custom Design Utilities matching pjj_world */
 @layer utilities {
   .world-gradient-text {
-    background: linear-gradient(135deg, #0284C7 0%, #6366F1 50%, #A855F7 100%);
+    background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-indigo) 50%, var(--accent-red) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   
   .world-gradient-primary {
-    background: linear-gradient(135deg, #0284C7 0%, #4F46E5 100%);
+    background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 100%);
   }
 
   .world-gradient-accent {
-    background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+    background: linear-gradient(135deg, var(--navy-800) 0%, var(--red) 100%);
   }
 
   .glass-card {
@@ -70,10 +78,10 @@ a:hover {
 
   .world-grid-bg {
     background-image: 
-      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
-      radial-gradient(circle at 100% 100%, rgba(6, 182, 212, 0.1) 0%, transparent 40%),
-      linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+      radial-gradient(circle at 50% 0%, rgba(11, 71, 127, 0.12) 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(237, 23, 28, 0.06) 0%, transparent 40%),
+      linear-gradient(to right, rgba(104, 117, 138, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(104, 117, 138, 0.05) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
   }
 }
