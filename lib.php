@@ -388,3 +388,19 @@ function theme_worldcampus_extend_navigation_primary(\core\navigation\views\prim
         $managenode->add('Theme Selector', new \moodle_url('/admin/themeselector.php'), \core\navigation\navigation_node::TYPE_CUSTOM);
     }
 }
+
+/**
+ * Returns the user's theme preference from cookies.
+ *
+ * @return string
+ */
+function theme_worldcampus_get_theme_preference() {
+    if (isset($_COOKIE['worldcampus_theme_preference'])) {
+        return $_COOKIE['worldcampus_theme_preference'];
+    }
+    if (isset($_COOKIE['presuniv_theme_preference'])) {
+        return $_COOKIE['presuniv_theme_preference'];
+    }
+    return 'auto';
+}
+
