@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * World Campus base drawers layout with React 19 + Shadcn UI mount.
+ * Language file.
  *
  * @package   theme_worldcampus
- * @copyright 2026 Septian Dwi Cahyo (@septian.dwica)
+ * @copyright 2025 Septian Dwi Cahyo(@septian.dwica) - https://samastanuswantara.com
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,29 +27,126 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/behat/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
 
+// Add block button in editing mode.
+$addblockbutton = $OUTPUT->addblockbutton();
+
+if (isloggedin()) {
+    $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
+    $blockdraweropen = (get_user_preferences('drawer-open-block') == true);
+} else {
+    $courseindexopen = false;
+    $blockdraweropen = false;
+}
+
+if (defined('BEHAT_SITE_RUNNING') && get_user_preferences('behat_keep_drawer_closed') != 1) {
+    $blockdraweropen = true;
+}
+
+$extraclasses = ['uses-drawers'];
+if ($courseindexopen) {
+    $extraclasses[] = 'drawer-open-index';
+}
+
 $blockshtml = $OUTPUT->blocks('side-pre');
-$hasblocks = !empty(trim($blockshtml));
+$hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
+if (!$hasblocks) {
+    $blockdraweropen = false;
+}
 
-$bodyattributes = $OUTPUT->body_attributes(['worldcampus-theme', 'min-h-screen', 'flex', 'flex-col']);
+$themesettings = new \theme_worldcampus\util\settings();
 
-$reactnavbarprops = [
-    'wwwroot' => $CFG->wwwroot,
-    'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID)]),
-    'userFullname' => fullname($USER),
-    'userEmail' => $USER->email ?? '',
-    'userAvatar' => (new moodle_url('/user/pix.php/' . $USER->id . '/f1.jpg'))->out(false),
-    'isLoggedIn' => isloggedin() && !isguestuser(),
-    'sesskey' => sesskey(),
-];
+if (!$themesettings->enablecourseindex) {
+    $courseindex = '';
+} else {
+    $courseindex = core_course_drawer();
+}
 
+if (!$courseindex) {
+    $courseindexopen = false;
+}
+
+$forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
+
+$secondarynavigation = false;
+$overflow = '';
+if ($PAGE->has_secondary_navigation()) {
+    $secondary = $PAGE->secondarynav;
+
+    if ($secondary->get_children_key_list()) {
+        $tablistnav = $PAGE->has_tablist_secondary_navigation();
+        $moremenu = new \core\navigation\output\more_menu($PAGE->secondarynav, 'nav-tabs', true, $tablistnav);
+        $secondarynavigation = $moremenu->export_for_template($OUTPUT);
+        $extraclasses[] = 'has-secondarynavigation';
+    }
+
+    $overflowdata = $PAGE->secondarynav->get_overflow_menu_data();
+    if (!is_null($overflowdata)) {
+        $overflow = $overflowdata->export_for_template($OUTPUT);
+    }
+}
+
+// Add Quick Management to primary navigation if authorized.
+$managementitems = \theme_worldcampus_get_management_menu();
+if ($managementitems && !empty($managementitems['items'])) {
+    $primarynav = $PAGE->primarynav;
+    $managenode = $primarynav->add('Quick Management', null, \navigation_node::TYPE_CONTAINER, null, 'quick_management');
+    $managenode->showinflatnavigation = true;
+    
+    $currenturl = $PAGE->url->out_as_local_url(false);
+    foreach ($managementitems['items'] as $item) {
+        $node = $managenode->add($item['text'], $item['url'], \navigation_node::TYPE_SETTING);
+        // Check if this item is the current page.
+        if (strpos($currenturl, $item['url']->out_as_local_url(false)) !== false) {
+            $extraclasses[] = 'is-quick-management';
+        }
+    }
+}
+
+$primary = new core\navigation\output\primary($PAGE);
+$renderer = $PAGE->get_renderer('core');
+$primarymenu = $primary->export_for_template($renderer);
+$buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
+// If the settings menu will be included in the header then don't add it here.
+$regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
+
+$header = $PAGE->activityheader;
+$headercontent = $header->export_for_template($renderer);
+
+$bodyattributes = $OUTPUT->body_attributes($extraclasses);
+if ($themesettings->navbartype === 'floating') {
+    $bodyattributes = str_replace('class="', 'class="navbar-floating-enabled ', $bodyattributes);
+}
 $templatecontext = [
-    'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID)]),
+    'sitename' => format_string($SITE->shortname, true, ['context' => \core\context\course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
-    'bodyattributes' => $bodyattributes,
-    'react_navbar_props_json' => json_encode($reactnavbarprops),
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
-    'user_menu' => $OUTPUT->user_menu(),
+    'bodyattributes' => $bodyattributes,
+    'courseindexopen' => $courseindexopen,
+    'blockdraweropen' => $blockdraweropen,
+    'courseindex' => $courseindex,
+    'primarymoremenu' => $primarymenu['moremenu'],
+    'secondarymoremenu' => $secondarynavigation ?: false,
+    'mobileprimarynav' => $primarymenu['mobileprimarynav'],
+    'usermenu' => $primarymenu['user'],
+    'langmenu' => $primarymenu['lang'],
+    'forceblockdraweropen' => $forceblockdraweropen,
+    'regionmainsettingsmenu' => $regionmainsettingsmenu,
+    'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
+    'overflow' => $overflow,
+    'headercontent' => $headercontent,
+    'addblockbutton' => $addblockbutton,
+    'enablecourseindex' => $themesettings->enablecourseindex,
+    'management_menu' => theme_worldcampus_get_management_menu(),
+    'themepreference' => theme_worldcampus_get_theme_preference(),
 ];
+
+$templatecontext = array_merge($templatecontext, $themesettings->footer());
+$templatecontext = array_merge($templatecontext, $themesettings->navbar());
+// Force normal navbar for logged in users to avoid layout issues in internal pages.
+$templatecontext['navbartype'] = 'normal';
+$templatecontext['is_floating'] = false;
+$templatecontext['is_sticky'] = false; // Or keep sticky if you want, but user said 'normal'
+$templatecontext['is_normal'] = true;
 
 echo $OUTPUT->render_from_template('theme_worldcampus/drawers', $templatecontext);

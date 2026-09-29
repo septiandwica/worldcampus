@@ -15,29 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * World Campus login layout with React 19 + Shadcn UI mount.
+ * A login page layout for the worldcampus theme.
  *
  * @package   theme_worldcampus
- * @copyright 2026 Septian Dwi Cahyo (@septian.dwica)
+ * @copyright 2025 Septian Dwi Cahyo(@septian.dwica) - https://samastanuswantara.com
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$bodyattributes = $OUTPUT->body_attributes(['worldcampus-auth', 'min-h-screen', 'overflow-x-hidden']);
-
-$reactprops = [
-    'wwwroot' => $CFG->wwwroot,
-    'ssoUrl' => (new moodle_url('/auth/sso/login.php'))->out(false),
-    'sitename' => format_string($SITE->fullname, true, ['context' => context_course::instance(SITEID)]),
-];
+$bodyattributes = $OUTPUT->body_attributes(['worldcampus-login']);
 
 $templatecontext = [
-    'sitename' => format_string($SITE->fullname, true, ['context' => context_course::instance(SITEID)]),
+    'sitename' => format_string($SITE->shortname, true, ['context' => \core\context\course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,
-    'react_props_json' => json_encode($reactprops),
-    'sso_url' => (new moodle_url('/auth/sso/login.php'))->out(false),
+    'themepreference' => theme_worldcampus_get_theme_preference(),
 ];
 
-echo $OUTPUT->render_from_template('theme_worldcampus/auth/login', $templatecontext);
+echo $OUTPUT->render_from_template('theme_worldcampus/login', $templatecontext);
