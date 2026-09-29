@@ -1,0 +1,72 @@
+<div class="login-form-container space-y-4">
+    {{#hasidentityproviders}}
+        <div class="space-y-2 mb-4">
+            {{#identityproviders}}
+                <a href="{{{url}}}" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-navy-900 to-navy-800 text-white font-semibold text-xs flex items-center justify-center gap-2 hover:opacity-95 transition-all shadow-md">
+                    {{#iconurl}}<img src="{{{iconurl}}}" alt="" class="w-4 h-4">{{/iconurl}}
+                    {{name}}
+                </a>
+            {{/identityproviders}}
+        </div>
+    {{/hasidentityproviders}}
+
+    {{#error}}
+        <div class="p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-semibold flex items-center gap-2" role="alert">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            {{{error}}}
+        </div>
+    {{/error}}
+
+    <form class="space-y-4" action="{{{loginurl}}}" method="post" id="login">
+        <input id="anchor" type="hidden" name="anchor" value="">
+        <script>document.getElementById('anchor').value = location.hash;</script>
+        <input type="hidden" name="logintoken" value="{{logintoken}}">
+
+        <div class="space-y-1.5">
+            <label for="username" class="text-xs font-bold text-foreground">
+                {{#str}}username{{/str}}
+            </label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="Enter your student ID or email" value="{{username}}" autocomplete="username" required>
+        </div>
+
+        <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+                <label for="password" class="text-xs font-bold text-foreground">
+                    {{#str}}password{{/str}}
+                </label>
+                {{#forgotpasswordurl}}
+                    <a href="{{{forgotpasswordurl}}}" class="text-[11px] text-cyan-400 hover:underline font-medium">
+                        {{#str}}forgotpassword{{/str}}
+                    </a>
+                {{/forgotpasswordurl}}
+            </div>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" autocomplete="current-password" required>
+        </div>
+
+        {{#rememberusername}}
+            <div class="flex items-center gap-2 pt-1">
+                <input type="checkbox" name="rememberusername" id="rememberusername" value="1" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-cyan-500" {{#rememberusername}}checked="checked"{{/rememberusername}}>
+                <label for="rememberusername" class="text-xs text-muted-foreground font-medium cursor-pointer">
+                    {{#str}}rememberusername, admin{{/str}}
+                </label>
+            </div>
+        {{/rememberusername}}
+
+        <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-navy-900 to-navy-800 hover:from-navy-800 hover:to-navy-700 text-white font-bold text-sm shadow-md transition-all cursor-pointer" id="loginbtn">
+            {{#str}}login{{/str}}
+        </button>
+    </form>
+
+    {{#guestlogin}}
+        <div class="pt-2 border-t border-border-subtle">
+            <form action="{{{loginurl}}}" method="post">
+                <input type="hidden" name="logintoken" value="{{logintoken}}">
+                <input type="hidden" name="username" value="guest">
+                <input type="hidden" name="password" value="guest">
+                <button type="submit" class="w-full py-2 px-4 rounded-xl border border-border-subtle bg-card hover:bg-slate-800/40 text-muted-foreground text-xs font-semibold transition-all">
+                    {{#str}}loginguest{{/str}}
+                </button>
+            </form>
+        </div>
+    {{/guestlogin}}
+</div>

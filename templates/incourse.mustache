@@ -1,0 +1,27 @@
+{{> theme_worldcampus/head }}
+<body {{{ bodyattributes }}}>
+    {{{ output.standard_top_of_body_html }}}
+
+    <!-- Top Navigation -->
+    {{> theme_worldcampus/navbar }}
+
+    <main id="page-wrapper" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        <!-- Breadcrumb & Header -->
+        <div class="border-b border-border-subtle pb-4">
+            {{{ output.full_header }}}
+        </div>
+
+        <!-- Activity Body Container -->
+        <div id="page" class="w-full space-y-6">
+            {{{ output.main_content }}}
+        </div>
+
+        <!-- Activity Prev/Next Navigation Buttons -->
+        {{{ output.activity_navigation }}}
+    </main>
+
+    {{> theme_worldcampus/footer }}
+
+    {{{ output.standard_end_of_body_html }}}
+</body>
+</html>

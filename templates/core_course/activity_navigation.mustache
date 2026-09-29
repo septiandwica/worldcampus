@@ -1,0 +1,19 @@
+<div class="activity-navigation flex items-center justify-between gap-4 my-8 pt-6 border-t border-border-subtle">
+    <div>
+        {{#has_prev}}
+            <a href="{{{prev_url}}}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-card border border-border-subtle hover:border-cyan-500/40 text-foreground text-xs font-bold transition-all shadow-sm">
+                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                <span>{{{prev_name}}}</span>
+            </a>
+        {{/has_prev}}
+    </div>
+
+    <div>
+        {{#has_next}}
+            <a href="{{{next_url}}}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-navy-900 to-navy-800 hover:from-navy-800 hover:to-navy-700 text-white text-xs font-bold transition-all shadow-md">
+                <span>{{{next_name}}}</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+        {{/has_next}}
+    </div>
+</div>
