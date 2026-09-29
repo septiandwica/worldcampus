@@ -1,0 +1,89 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Theme settings modal js.
+ *
+ * @package   theme_worldcampus
+ * @copyright 2025 Septian Dwi Cahyo(@septian.dwica) - https://samastanuswantara.com
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+define(['core/ajax', 'core/modal', 'core/custom_interaction_events', 'core/notification'],
+function(Ajax, Modal, CustomEvents, Notification) {
+
+    class AccessibilityModal extends Modal {
+        constructor(root) {
+            super(root);
+            var request = Ajax.call([{
+                methodname: 'theme_worldcampus_getthemesettings',
+                args: {}
+            }]);
+
+            request[0].done(function(result) {
+                var fontTypeElement = document.getElementById('fonttype');
+                if (fontTypeElement) {
+                    fontTypeElement.value = result.fonttype;
+                }
+
+                if (result.enableaccessibilitytoolbar) {
+                    var toolbarElement = document.getElementById('enableaccessibilitytoolbar');
+                    if (toolbarElement) {
+                        toolbarElement.checked = true;
+                    }
+                }
+            });
+        }
+
+        registerEventListeners() {
+            super.registerEventListeners();
+
+            this.getModal().on(CustomEvents.events.activate, '[data-action="save"]', (e) => {
+                var request = Ajax.call([{
+                    methodname: 'theme_worldcampus_savethemesettings',
+                    args: {
+                        formdata: this.getBody().find('form').serialize()
+                    }
+                }]);
+
+                request[0].done(() => {
+                    document.location.reload(true);
+                }).fail((error) => {
+                    var message = error.message;
+                    if (!message) {
+                        message = error.error;
+                    }
+
+                    Notification.addNotification({
+                        message: message,
+                        type: 'error'
+                    });
+
+                    this.hide();
+                    this.destroy();
+                });
+            });
+
+            this.getModal().on(CustomEvents.events.activate, '[data-action="cancel"]', (e) => {
+                this.hide();
+                this.destroy();
+            });
+        }
+    }
+
+    AccessibilityModal.TYPE = "theme_worldcampus/themesettings_modal";
+    AccessibilityModal.TEMPLATE = "theme_worldcampus/accessibilitysettings_modal";
+
+    return AccessibilityModal;
+});

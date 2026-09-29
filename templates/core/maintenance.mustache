@@ -1,0 +1,62 @@
+<div class="worldcampus-maintenance-page" id="page">
+    <div class="worldcampus-maintenance-container">
+        <div class="worldcampus-maintenance-icon" style="font-size: 80px; color: var(--presuniv-primary); margin-bottom: 20px;">
+            <i class="fa fa-cog fa-spin"></i>
+        </div>
+        
+        <h1 class="worldcampus-maintenance-title">{{#str}}sitemaintenance, admin{{/str}}</h1>
+        
+        <div class="worldcampus-maintenance-content">
+            {{{info}}}
+        </div>
+        
+        {{#maintenancedatetime}}
+        <div class="worldcampus-maintenance-countdown" style="margin-top: 30px; margin-bottom: 30px;">
+            <h4 class="text-muted" style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">Estimated Completion In</h4>
+            <div id="maintenance-timer" style="font-size: 2.5rem; font-weight: bold; color: var(--presuniv-primary); text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
+                --:--:--:--
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var countDownDate = new Date("{{maintenancedatetime}}").getTime();
+                var timerElement = document.getElementById("maintenance-timer");
+
+                if (!isNaN(countDownDate)) {
+                    var x = setInterval(function() {
+                        var now = new Date().getTime();
+                        var distance = countDownDate - now;
+
+                        if (distance < 0) {
+                            clearInterval(x);
+                            timerElement.innerHTML = "Maintenance Expected to End Soon";
+                            return;
+                        }
+
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        
+                        var display = "";
+                        if (days > 0) display += days + "d ";
+                        display += hours.toString().padStart(2, '0') + "h " 
+                                 + minutes.toString().padStart(2, '0') + "m " 
+                                 + seconds.toString().padStart(2, '0') + "s";
+
+                        timerElement.innerHTML = display;
+                    }, 1000);
+                } else {
+                    timerElement.parentElement.style.display = 'none';
+                }
+            });
+        </script>
+        {{/maintenancedatetime}}
+        
+        <div class="worldcampus-maintenance-footer">
+            <span style="opacity: 0.8;">We are currently performing scheduled maintenance. Please check back soon.</span>
+            <br><br>
+            President University &copy; 2026
+        </div>
+    </div>
+</div>

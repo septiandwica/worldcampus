@@ -1,0 +1,110 @@
+{{!
+    @template theme_worldcampus/frontpage_welcome
+    Welcome section with REAL activity chart from user logs
+}}
+
+<section class="frontpage-welcome-section py-5">
+    <div class="worldcampus-container-fluid">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="welcome-content">
+                    <h2 class="welcome-title mb-3">
+                        {{greeting_time}}, {{user_firstname}}
+                    </h2>
+                    <p class="welcome-subtitle text-muted mb-4">
+                        Welcome back to {{site_fullname}}
+                    </p>
+
+                    <div class="quick-stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fa fa-book"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">{{active_courses_count}}</div>
+                                <div class="stat-label">Active Courses</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fa fa-tasks"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">{{pending_assignments}}</div>
+                                <div class="stat-label">Pending Tasks</div>
+                            </div>
+                        </div>
+
+                        {{#new_messages}}
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">{{new_messages}}</div>
+                                <div class="stat-label">New Messages</div>
+                            </div>
+                        </div>
+                        {{/new_messages}}
+                    </div>
+
+                    <div class="welcome-actions mt-4">
+                        <a href="{{dashboard_url}}" class="btn btn-primary">
+                            Go to Dashboard
+                        </a>
+                        <a href="{{my_courses_url}}" class="btn btn-outline-secondary">
+                            View My Courses
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="activity-chart-container">
+                    <h5 class="chart-title">Your Activity (Last 7 Days)</h5>
+                    <p class="chart-description">Total interactions including course access, assignments, and forum participation</p>
+                    <div class="activity-chart">
+                        <div class="chart-bars" id="activityChartBars">
+                            {{! Chart will be rendered here by JavaScript }}
+                        </div>
+                    </div>
+                    <div class="chart-legend">
+                        <small class="text-muted">
+                            <i class="fa fa-info-circle"></i> Each bar shows total activity count for that day
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{#js}}
+require(['jquery'], function($) {
+    $(document).ready(function() {
+        try {
+            var activityData = {{{activity_data}}};
+            var activityLabels = {{{activity_labels}}};
+            var maxActivity = parseInt('{{{max_activity}}}');
+
+            var html = '';
+            for (var i = 0; i < activityData.length; i++) {
+                var height = maxActivity > 0 ? (activityData[i] / maxActivity) * 100 : 10;
+                if (height < 10 && activityData[i] > 0) height = 10;
+
+                html += '<div class="chart-bar-wrapper">';
+                html += '<div class="chart-bar" style="height: ' + height + '%">';
+                html += '<span class="bar-value">' + activityData[i] + '</span>';
+                html += '</div>';
+                html += '<div class="bar-label">' + activityLabels[i] + '</div>';
+                html += '</div>';
+            }
+
+            $('#activityChartBars').html(html);
+        } catch (e) {
+            console.error('Activity chart error:', e);
+        }
+    });
+});
+{{/js}}

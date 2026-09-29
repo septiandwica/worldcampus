@@ -1,0 +1,19 @@
+<div class="custom-page-container container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="custom-page-content p-4 p-md-5">
+
+                <div class="content-wrapper">
+                    {{{page_content}}}
+                    {{{main_content}}}
+                </div>
+                
+                {{^page_content}}
+                <div class="alert alert-info">
+                    No content has been set for this page yet.
+                </div>
+                {{/page_content}}
+            </div>
+        </div>
+    </div>
+</div>

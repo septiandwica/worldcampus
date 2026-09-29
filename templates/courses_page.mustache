@@ -1,0 +1,103 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_worldcampus/courses_page
+
+    Full courses listing page with pagination - Styled like frontpage
+}}
+
+<section class="custom-courses-section py-5 bg-light">
+    <div class="worldcampus-container-fluid">
+        <div class="section-header text-center mb-5">
+            <span class="section-badge">{{#str}}explorecourses, theme_worldcampus{{/str}}</span>
+            <h2 class="section-title"><span class="text-gradient" data-text="{{page_title}}">{{page_title}}</span></h2>
+            {{#has_courses}}
+            <p class="text-muted mt-3">Showing {{showing_start}} - {{showing_end}} of {{total_courses}} courses</p>
+            {{/has_courses}}
+        </div>
+
+        {{#has_courses}}
+        <div class="row">
+            <div class="d-flex flex-wrap justify-content-start w-100">
+                {{#courses}}
+                    {{> theme_worldcampus/worldcampus_coursecard }}
+                {{/courses}}
+            </div>
+        </div>
+
+        {{#has_pagination}}
+        <div class="row mt-5 mb-3">
+            <div class="col-12">
+                <nav aria-label="Course pagination">
+                    <ul class="pagination justify-content-center">
+                        {{#pagination.has_prev}}
+                        <li class="page-item">
+                            <a class="page-link" href="{{pagination.prev_url}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {{/pagination.has_prev}}
+
+                        {{^pagination.has_prev}}
+                        <li class="page-item disabled">
+                            <span class="page-link">&laquo;</span>
+                        </li>
+                        {{/pagination.has_prev}}
+
+                        {{#pagination.pages}}
+                            {{#ellipsis}}
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                            {{/ellipsis}}
+
+                            {{^ellipsis}}
+                            <li class="page-item {{#active}}active{{/active}}">
+                                <a class="page-link" href="{{url}}">{{number}}</a>
+                            </li>
+                            {{/ellipsis}}
+                        {{/pagination.pages}}
+
+                        {{#pagination.has_next}}
+                        <li class="page-item">
+                            <a class="page-link" href="{{pagination.next_url}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {{/pagination.has_next}}
+
+                        {{^pagination.has_next}}
+                        <li class="page-item disabled">
+                            <span class="page-link">&raquo;</span>
+                        </li>
+                        {{/pagination.has_next}}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        {{/has_pagination}}
+        {{/has_courses}}
+
+        {{^has_courses}}
+        <div class="col-12 text-center text-muted py-5">
+            <i class="fa fa-graduation-cap fa-4x mb-3"></i>
+            <h3>{{#str}}nocoursesfound, theme_worldcampus{{/str}}</h3>
+            <p>Check back later for available courses.</p>
+        </div>
+        {{/has_courses}}
+    </div>
+</section>

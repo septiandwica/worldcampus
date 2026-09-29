@@ -27,20 +27,13 @@ defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ . '/lib.php');
 
 $THEME->name = 'worldcampus';
-
-// Extend from Boost for 100% core Moodle stability
-$THEME->parents = ['boost'];
-
-// Sheets & SCSS
 $THEME->sheets = [];
 $THEME->editor_sheets = [];
+$THEME->editor_scss = ['editor'];
 $THEME->usefallback = false;
-
-// Renderer factory
-$THEME->rendererfactory = 'theme_overridden_renderer_factory';
-$THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
-$THEME->haseditswitch = true;
-$THEME->usescourseindex = true;
+$THEME->scss = function($theme) {
+    return theme_worldcampus_get_main_scss_content($theme);
+};
 
 // Layout definitions
 $THEME->layouts = [
@@ -68,40 +61,41 @@ $THEME->layouts = [
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
     ],
-    // In-course activity view (Quiz, Assignment, Lesson, Resource)
+    // In-course activity view
     'incourse' => [
         'file' => 'incourse.php',
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
     ],
-    // Frontpage / Landing page (World Campus showcase)
+    // Frontpage / Landing page
     'frontpage' => [
         'file' => 'frontpage.php',
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
-        'options' => ['nonavbar' => false],
+        'options' => ['nonavbar' => true],
     ],
-    // User Dashboard (My Moodle / Dashboard)
+    // User Dashboard
     'mydashboard' => [
-        'file' => 'dashboard.php',
-        'regions' => ['side-pre'],
-        'defaultregion' => 'side-pre',
-        'options' => ['nonavbar' => false, 'langmenu' => true],
-    ],
-    // My Courses Catalog
-    'mycourses' => [
-        'file' => 'mycourses.php',
-        'regions' => ['side-pre'],
-        'defaultregion' => 'side-pre',
-    ],
-    // Site administration & settings
-    'admin' => [
         'file' => 'drawers.php',
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
+        'options' => ['nonavbar' => true, 'langmenu' => true],
     ],
-    // User profile & preferences
-    'settings' => [
+    // My Courses
+    'mycourses' => [
+        'file' => 'drawers.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+        'options' => ['nonavbar' => true],
+    ],
+    // My public page
+    'mypublic' => [
+        'file' => 'mypublic.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+    ],
+    // Site administration
+    'admin' => [
         'file' => 'drawers.php',
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
@@ -110,24 +104,46 @@ $THEME->layouts = [
     'login' => [
         'file' => 'login.php',
         'regions' => [],
-        'options' => ['langmenu' => true, 'nonavbar' => true, 'nofooter' => true],
+        'options' => ['langmenu' => true],
     ],
-    // Maintenance page
-    'maintenance' => [
-        'file' => 'maintenance.php',
-        'regions' => [],
-        'options' => ['noblocks' => true, 'nonavbar' => true],
-    ],
-    // Popup and embedded
+    // Popups
     'popup' => [
         'file' => 'embedded.php',
         'regions' => [],
-        'options' => ['nofooter' => true, 'nonavbar' => true],
+        'options' => [
+            'nofooter' => true,
+            'nonavbar' => true,
+            'activityheader' => [
+                'notitle' => true,
+                'nocompletion' => true,
+                'nodescription' => true,
+            ],
+        ],
+    ],
+    'frametop' => [
+        'file' => 'embedded.php',
+        'regions' => [],
+        'options' => [
+            'nofooter' => true,
+            'nocoursefooter' => true,
+            'activityheader' => [
+                'nocompletion' => true,
+            ],
+        ],
     ],
     'embedded' => [
         'file' => 'embedded.php',
+        'regions' => ['side-pre'],
+        'defaultregion' => 'side-pre',
+    ],
+    'maintenance' => [
+        'file' => 'maintenance.php',
         'regions' => [],
-        'options' => ['nofooter' => true, 'nonavbar' => true],
+    ],
+    'print' => [
+        'file' => 'embedded.php',
+        'regions' => [],
+        'options' => ['nofooter' => true, 'nonavbar' => false, 'noactivityheader' => true],
     ],
     'redirect' => [
         'file' => 'embedded.php',
@@ -143,4 +159,25 @@ $THEME->layouts = [
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
     ],
+    // Custom informative pages
+    'custom' => [
+        'file' => 'custom.php',
+        'regions' => [],
+        'options' => ['nonavbar' => true],
+    ],
+];
+
+$THEME->parents = ['boost'];
+$THEME->enable_dock = false;
+$THEME->extrascsscallback = 'theme_worldcampus_get_extra_scss';
+$THEME->prescsscallback = 'theme_worldcampus_get_pre_scss';
+$THEME->yuicssmodules = [];
+$THEME->rendererfactory = 'theme_overridden_renderer_factory';
+$THEME->requiredblocks = '';
+$THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
+$THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
+$THEME->haseditswitch = true;
+$THEME->usescourseindex = true;
+$THEME->activityheaderconfig = [
+    'notitle' => true,
 ];

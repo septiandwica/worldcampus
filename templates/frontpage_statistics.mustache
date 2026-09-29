@@ -1,0 +1,78 @@
+{{!
+    @template theme_worldcampus/frontpage_statistics
+    Key statistics section - Clean & Simple Design
+}}
+
+<section class="frontpage-statistics-section py-4 bg-white">
+    <div class="worldcampus-container-fluid">
+        <div class="section-header text-center mb-4">
+            <h3 class="section-title">Your Progress</h3>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fa fa-graduation-cap"></i>
+                    </div>
+                    <div class="stats-value">{{total_courses_completed}}</div>
+                    <div class="stats-label">Courses Completed</div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fa fa-clock"></i>
+                    </div>
+                    <div class="stats-value">{{total_learning_hours}}<span class="stats-unit">h</span></div>
+                    <div class="stats-label">Learning Hours</div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <div class="stats-value">{{current_average_grade}}%</div>
+                    <div class="stats-label">Average Grade</div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fa fa-certificate"></i>
+                    </div>
+                    <div class="stats-value">{{certificates_earned}}</div>
+                    <div class="stats-label">Certificates</div>
+                </div>
+            </div>
+        </div>
+
+        {{#achievements}}
+        <div class="achievements-section mt-4">
+            <h4 class="achievements-title mb-3">
+                <i class="fa fa-trophy me-2"></i>Recent Achievements
+            </h4>
+            <div class="row">
+                {{#.}}
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="achievement-item">
+                        <div class="achievement-icon">
+                            {{#icon}}<i class="fa fa-{{icon}}"></i>{{/icon}}
+                        </div>
+                        <div class="achievement-content">
+                            <h6 class="achievement-name">{{name}}</h6>
+                            <p class="achievement-description">{{description}}</p>
+                            <small class="achievement-date text-muted">{{date}}</small>
+                        </div>
+                    </div>
+                </div>
+                {{/.}}
+            </div>
+        </div>
+        {{/achievements}}
+    </div>
+</section>
