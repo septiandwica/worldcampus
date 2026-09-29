@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * World Campus frontpage layout.
+ * World Campus frontpage layout with React 19 + Shadcn UI mount.
  *
  * @package   theme_worldcampus
  * @copyright 2026 Septian Dwi Cahyo (@septian.dwica)
@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/course/lib.php');
 
-$bodyattributes = $OUTPUT->body_attributes(['worldcampus-frontpage', 'bg-slate-950', 'text-slate-100', 'min-h-screen', 'flex', 'flex-col']);
+$bodyattributes = $OUTPUT->body_attributes(['worldcampus-frontpage', 'min-h-screen', 'flex', 'flex-col']);
 
 // Fetch active courses for frontpage showcase
 $courses = enrol_get_all_users_courses(0);
@@ -36,24 +36,29 @@ foreach ($courses as $c) {
     if ($c->id == SITEID) continue;
     if ($count >= 6) break;
     $courselist[] = [
-        'id' => $c->id,
+        'id' => (int)$c->id,
         'fullname' => format_string($c->fullname),
         'summary' => strip_tags($c->summary),
-        'viewurl' => new moodle_url('/course/view.php', ['id' => $c->id]),
-        'category' => $c->category,
+        'viewurl' => (new moodle_url('/course/view.php', ['id' => $c->id]))->out(false),
+        'category' => (string)$c->category,
     ];
     $count++;
 }
+
+$reactprops = [
+    'wwwroot' => $CFG->wwwroot,
+    'herotitle' => theme_worldcampus_get_setting('herotitle', 'Empowering Minds Across the Globe'),
+    'herosubtitle' => theme_worldcampus_get_setting('herosubtitle', 'Experience world-class online learning with interactive digital classrooms, AI-assisted tutoring, and flexible study pathways.'),
+    'herobuttontext' => theme_worldcampus_get_setting('herobuttontext', 'Explore Global Courses'),
+    'herobuttonurl' => theme_worldcampus_get_setting('herobuttonurl', '/course/index.php'),
+    'isLoggedIn' => isloggedin() && !isguestuser(),
+];
 
 $templatecontext = [
     'sitename' => format_string($SITE->fullname, true, ['context' => context_course::instance(SITEID)]),
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,
-    'tagline' => theme_worldcampus_get_setting('tagline', 'Connecting You to Global Education'),
-    'herotitle' => theme_worldcampus_get_setting('herotitle', 'Empowering Minds Across the Globe'),
-    'herosubtitle' => theme_worldcampus_get_setting('herosubtitle', 'Experience world-class online learning with interactive digital classrooms, AI-assisted tutoring, and flexible study pathways.'),
-    'herobuttontext' => theme_worldcampus_get_setting('herobuttontext', 'Explore Global Courses'),
-    'herobuttonurl' => theme_worldcampus_get_setting('herobuttonurl', '/course/index.php'),
+    'react_props_json' => json_encode($reactprops),
     'has_courses' => !empty($courselist),
     'courses' => $courselist,
     'isloggedin' => isloggedin() && !isguestuser(),

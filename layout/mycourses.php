@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * World Campus My Courses catalog layout.
+ * World Campus My Courses catalog layout with React 19 + Shadcn UI mount.
  *
  * @package   theme_worldcampus
  * @copyright 2026 Septian Dwi Cahyo (@septian.dwica)
@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/course/lib.php');
 
-$bodyattributes = $OUTPUT->body_attributes(['worldcampus-mycourses', 'bg-slate-950', 'text-slate-100', 'min-h-screen', 'flex', 'flex-col']);
+$bodyattributes = $OUTPUT->body_attributes(['worldcampus-mycourses', 'min-h-screen', 'flex', 'flex-col']);
 
 // Fetch user enrolled courses
 $enrolledcourses = enrol_get_my_courses(['id', 'fullname', 'summary', 'enablecompletion', 'category'], 'visible DESC,sortorder ASC');
@@ -35,22 +35,26 @@ $coursesdata = [];
 foreach ($enrolledcourses as $c) {
     $progress = theme_worldcampus_get_course_progress($c->id, $USER->id);
     $coursesdata[] = [
-        'id' => $c->id,
+        'id' => (int)$c->id,
         'fullname' => format_string($c->fullname),
         'summary' => strip_tags($c->summary),
-        'progress' => $progress,
+        'progress' => (int)$progress,
         'is_completed' => $progress >= 100,
-        'viewurl' => new moodle_url('/course/view.php', ['id' => $c->id]),
+        'viewurl' => (new moodle_url('/course/view.php', ['id' => $c->id]))->out(false),
     ];
 }
+
+$reactprops = [
+    'wwwroot' => $CFG->wwwroot,
+    'courses' => $coursesdata,
+    'courseCount' => count($coursesdata),
+];
 
 $templatecontext = [
     'sitename' => format_string($SITE->fullname, true, ['context' => context_course::instance(SITEID)]),
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,
-    'courses' => $coursesdata,
-    'has_courses' => !empty($coursesdata),
-    'course_count' => count($coursesdata),
+    'react_props_json' => json_encode($reactprops),
     'user_menu' => $OUTPUT->user_menu(),
 ];
 

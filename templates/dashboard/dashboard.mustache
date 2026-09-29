@@ -2,122 +2,14 @@
 <body {{{ bodyattributes }}}>
     {{{ output.standard_top_of_body_html }}}
 
+    <!-- Top Navigation -->
     {{> theme_worldcampus/navbar }}
 
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        <!-- Welcome Hero Banner -->
-        <div class="relative overflow-hidden glass-card p-6 sm:p-8 rounded-2xl border-slate-800/80 world-grid-bg">
-            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div class="space-y-2">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        Academic Semester Active
-                    </div>
-                    <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Welcome back, <span class="world-gradient-text">{{user_fullname}}</span>
-                    </h1>
-                    <p class="text-sm text-slate-400 max-w-xl">
-                        Here is your learning summary across active courses. Continue where you left off or ask your AI Tutor for help.
-                    </p>
-                </div>
+        <!-- React 19 + Shadcn UI Dashboard View -->
+        <div data-react-mount="DashboardView" data-props="{{{react_props_json}}}"></div>
 
-                <!-- AI Tutor Quick Access Card -->
-                <div class="flex-shrink-0 p-4 rounded-xl bg-gradient-to-r from-indigo-900/60 to-purple-900/60 border border-indigo-500/30 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl world-gradient-primary flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <div>
-                        <div class="text-xs font-bold text-indigo-300 uppercase tracking-wider">AI Learning Assistant</div>
-                        <div class="text-sm font-bold text-white">Ask Demi AI Tutor</div>
-                        <div class="text-[11px] text-slate-300">Ready to assist 24/7</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Academic Metrics Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div class="glass-card p-6 rounded-2xl border-slate-800/80 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                </div>
-                <div>
-                    <div class="text-2xl font-extrabold text-white">{{course_count}}</div>
-                    <div class="text-xs text-slate-400 font-semibold">Enrolled Courses</div>
-                </div>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl border-slate-800/80 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                </div>
-                <div>
-                    <div class="text-2xl font-extrabold text-indigo-400">{{average_progress}}%</div>
-                    <div class="text-xs text-slate-400 font-semibold">Average Course Completion</div>
-                </div>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl border-slate-800/80 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <div>
-                    <div class="text-2xl font-extrabold text-emerald-400">Good Standing</div>
-                    <div class="text-xs text-slate-400 font-semibold">Academic Status</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- In-Progress Courses Grid -->
-        <div class="space-y-4">
-            <div class="flex items-center justify-between">
-                <h2 class="text-xl font-bold text-white">Active Courses</h2>
-                <a href="{{{ config.wwwroot }}}/my/courses.php" class="text-xs font-semibold text-cyan-400 hover:underline">
-                    View All Courses &rarr;
-                </a>
-            </div>
-
-            {{#has_courses}}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {{#courses}}
-                <div class="glass-card rounded-2xl p-6 border-slate-800/80 flex flex-col justify-between hover:border-cyan-500/30 transition-all group">
-                    <div>
-                        <h3 class="font-bold text-white group-hover:text-cyan-400 transition-colors line-clamp-2 mb-2">
-                            {{fullname}}
-                        </h3>
-                        <p class="text-xs text-slate-400 line-clamp-2 mb-4">{{summary}}</p>
-                    </div>
-
-                    <div class="space-y-3 pt-4 border-t border-slate-800/60">
-                        <div class="flex items-center justify-between text-xs">
-                            <span class="text-slate-400 font-medium">Progress</span>
-                            <span class="text-cyan-400 font-bold">{{progress}}%</span>
-                        </div>
-                        <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
-                            <div class="world-gradient-accent h-2 rounded-full transition-all duration-500" style="width: {{progress}}%;"></div>
-                        </div>
-                        <a href="{{{ viewurl }}}" class="w-full mt-2 py-2 px-4 rounded-xl bg-slate-800 hover:bg-cyan-600 text-white text-xs font-bold text-center block transition-all">
-                            Continue Course
-                        </a>
-                    </div>
-                </div>
-                {{/courses}}
-            </div>
-            {{/has_courses}}
-
-            {{^has_courses}}
-            <div class="glass-card p-12 rounded-2xl text-center border-slate-800/80 space-y-4">
-                <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-800/60 flex items-center justify-center text-slate-500">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                </div>
-                <h3 class="text-lg font-bold text-white">No active course enrollments</h3>
-                <p class="text-xs text-slate-400 max-w-sm mx-auto">Explore available programs and enroll to begin your learning journey.</p>
-                <a href="{{{ config.wwwroot }}}/course/index.php" class="inline-block px-6 py-2.5 rounded-xl world-gradient-primary text-white text-xs font-bold">Browse Courses</a>
-            </div>
-            {{/has_courses}}
-        </div>
-
-        <!-- Moodle Dashboard Main Content (Timeline / Calendar / Blocks) -->
+        <!-- Moodle Dashboard Main Content (Timeline / Blocks) -->
         <div class="pt-6">
             {{{ output.main_content }}}
         </div>

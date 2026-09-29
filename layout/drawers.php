@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * World Campus base drawers layout.
+ * World Campus base drawers layout with React 19 + Shadcn UI mount.
  *
  * @package   theme_worldcampus
  * @copyright 2026 Septian Dwi Cahyo (@septian.dwica)
@@ -30,17 +30,26 @@ require_once($CFG->dirroot . '/course/lib.php');
 $blockshtml = $OUTPUT->blocks('side-pre');
 $hasblocks = !empty(trim($blockshtml));
 
-$bodyattributes = $OUTPUT->body_attributes(['worldcampus-theme', 'bg-slate-950', 'text-slate-100', 'min-h-screen', 'flex', 'flex-col']);
+$bodyattributes = $OUTPUT->body_attributes(['worldcampus-theme', 'min-h-screen', 'flex', 'flex-col']);
+
+$reactnavbarprops = [
+    'wwwroot' => $CFG->wwwroot,
+    'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID)]),
+    'userFullname' => fullname($USER),
+    'userEmail' => $USER->email ?? '',
+    'userAvatar' => (new moodle_url('/user/pix.php/' . $USER->id . '/f1.jpg'))->out(false),
+    'isLoggedIn' => isloggedin() && !isguestuser(),
+    'sesskey' => sesskey(),
+];
 
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID)]),
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,
+    'react_navbar_props_json' => json_encode($reactnavbarprops),
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
-    'tagline' => theme_worldcampus_get_setting('tagline', 'Connecting You to Global Education'),
     'user_menu' => $OUTPUT->user_menu(),
-    'navbar_logo' => $OUTPUT->get_compact_logo_url(),
 ];
 
 echo $OUTPUT->render_from_template('theme_worldcampus/drawers', $templatecontext);
