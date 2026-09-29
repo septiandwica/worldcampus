@@ -1,8 +1,12 @@
 <header class="sticky top-0 z-40 w-full glass-navbar transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-            <!-- Brand / Logo -->
+            <!-- Mobile Hamburger Button & Brand -->
             <div class="flex items-center gap-3">
+                <button type="button" class="p-2 rounded-xl border border-slate-700/60 bg-slate-800/40 text-slate-300 hover:text-white md:hidden" data-action="toggle-drawer" data-target="theme_worldcampus-drawers-primary-mobile" aria-label="Open mobile menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+
                 <a href="{{{ config.wwwroot }}}" class="flex items-center gap-3 group">
                     <div class="w-10 h-10 rounded-xl world-gradient-primary flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-200">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -10,7 +14,7 @@
                         </svg>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-lg font-extrabold tracking-tight text-white flex items-center gap-1.5">
+                        <span class="text-lg font-extrabold tracking-tight text-slate-100 flex items-center gap-1.5">
                             World<span class="world-gradient-text">Campus</span>
                         </span>
                         <span class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Global Digital University</span>
@@ -56,22 +60,3 @@
         </div>
     </div>
 </header>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggleBtn = document.getElementById('worldcampusThemeToggle');
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', function() {
-                const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-                const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', nextTheme);
-                if (nextTheme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-                localStorage.setItem('worldcampus_theme', nextTheme);
-            });
-        }
-    });
-</script>

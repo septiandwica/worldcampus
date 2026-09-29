@@ -1,0 +1,13 @@
+<div id="{{id}}" class="{{drawerclasses}}" aria-labelledby="{{id}}-title" aria-hidden="{{#draweropen}}false{{/draweropen}}{{^draweropen}}true{{/draweropen}}" tabindex="-1">
+    <div class="drawerheader">
+        <h3 id="{{id}}-title" class="drawertitle">
+            {{$drawertitle}}{{/drawertitle}}
+        </h3>
+        <button class="btn-drawer-close" data-action="closedrawer" data-target="{{id}}" aria-label="Close drawer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+    <div class="drawercontent">
+        {{$drawercontent}}{{/drawercontent}}
+    </div>
+</div>

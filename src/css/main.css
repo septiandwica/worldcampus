@@ -21,6 +21,18 @@
 /* Rich Course Cards & MyOverview Block Styling */
 @import "./moodle-coursecards.css";
 
+/* Responsive Sliding Drawers & Mobile Breakpoints */
+@import "./moodle-drawers.css";
+
+/* Loading Overlays, Skeletons, Spinners & Progress Indicators */
+@import "./moodle-loading.css";
+
+/* Course Index, Section Accordions & Activity Cards (mod types) */
+@import "./moodle-course-format.css";
+
+/* Modals, Floating Toasts & Interactive Overlays */
+@import "./moodle-modals-toasts.css";
+
 /* Global Base Resets */
 body {
   font-family: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;

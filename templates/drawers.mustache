@@ -2,44 +2,143 @@
 <body {{{ bodyattributes }}}>
     {{{ output.standard_top_of_body_html }}}
 
-    <!-- Top Navigation -->
+    <!-- Global Loading Overlay -->
+    {{> theme_worldcampus/loading-overlay }}
+
+    <!-- Mobile Primary Drawer -->
+    {{> theme_worldcampus/primary-drawer-mobile }}
+
+    <!-- Left Course Index Drawer (if on course page) -->
+    {{#courseindex}}
+        <div id="theme_worldcampus-drawers-courseindex" class="drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}" aria-labelledby="courseindex-title" tabindex="-1">
+            <div class="drawerheader">
+                <h3 id="courseindex-title" class="drawertitle">
+                    <svg class="w-4 h-4 text-cyan-400 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
+                    {{#str}}courseindex, theme_worldcampus{{/str}}
+                </h3>
+                <button class="btn-drawer-close" data-action="closedrawer" data-target="theme_worldcampus-drawers-courseindex" aria-label="Close index">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="drawercontent">
+                {{{ courseindex }}}
+            </div>
+        </div>
+    {{/courseindex}}
+
+    <!-- Right Block Drawer -->
+    {{#hasblocks}}
+        <div id="theme_worldcampus-drawers-blocks" class="drawer drawer-right {{#blockdraweropen}}show{{/blockdraweropen}}" aria-labelledby="blocks-title" tabindex="-1">
+            <div class="drawerheader">
+                <h3 id="blocks-title" class="drawertitle">
+                    <svg class="w-4 h-4 text-indigo-400 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    {{#str}}blocks{{/str}}
+                </h3>
+                <button class="btn-drawer-close" data-action="closedrawer" data-target="theme_worldcampus-drawers-blocks" aria-label="Close blocks">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="drawercontent space-y-4">
+                {{{ addblockbutton }}}
+                {{{ sidepreblocks }}}
+            </div>
+        </div>
+    {{/hasblocks}}
+
+    <!-- Backdrop for Mobile Drawers -->
+    <div id="drawer-backdrop" class="drawer-backdrop"></div>
+
+    <!-- Top Navigation Bar -->
     {{> theme_worldcampus/navbar }}
 
     <!-- Main Container -->
     <main id="page-wrapper" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Breadcrumb / Header notifications -->
+        <!-- Page Header & Drawer Toggle Controls -->
         <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="space-y-1">
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
                     {{{ output.page_heading }}}
                 </h1>
-                <div class="text-sm text-slate-400">
+                <div class="text-sm">
                     {{{ output.navbar }}}
                 </div>
             </div>
+
+            <!-- Header Action Controls (Drawers Toggles & Page Button) -->
             <div class="flex items-center gap-2">
+                {{#courseindex}}
+                    <button type="button" class="drawer-toggle-btn" data-action="toggle-drawer" data-target="theme_worldcampus-drawers-courseindex" title="Toggle Syllabus Index">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
+                        <span class="text-xs font-bold ml-1.5 hidden sm:inline">Index</span>
+                    </button>
+                {{/courseindex}}
+
+                {{#hasblocks}}
+                    <button type="button" class="drawer-toggle-btn" data-action="toggle-drawer" data-target="theme_worldcampus-drawers-blocks" title="Toggle Sidebar Blocks">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        <span class="text-xs font-bold ml-1.5 hidden sm:inline">Blocks</span>
+                    </button>
+                {{/hasblocks}}
+
                 {{{ output.page_heading_button }}}
             </div>
         </div>
 
-        <!-- Layout Grid: Main Content & Sidebar -->
-        <div class="grid grid-cols-1 {{#hasblocks}}lg:grid-cols-12 gap-8{{/hasblocks}}">
-            <!-- Main Content Region -->
-            <div class="{{#hasblocks}}lg:col-span-8 xl:col-span-9{{/hasblocks}} {{^hasblocks}}w-full{{/hasblocks}} space-y-6">
-                {{{ output.main_content }}}
-            </div>
-
-            <!-- Sidebar Blocks Region -->
-            {{#hasblocks}}
-            <aside class="lg:col-span-4 xl:col-span-3 space-y-6">
-                {{{ sidepreblocks }}}
-            </aside>
-            {{/hasblocks}}
+        <!-- Main Content Area -->
+        <div id="page" class="drawers w-full space-y-6">
+            {{{ output.main_content }}}
         </div>
     </main>
 
     <!-- Global Footer -->
     {{> theme_worldcampus/footer }}
+
+    <!-- Drawer Interactive Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backdrop = document.getElementById('drawer-backdrop');
+
+            function toggleDrawer(targetId) {
+                const drawer = document.getElementById(targetId);
+                if (!drawer) return;
+                const isOpen = drawer.classList.contains('show');
+                if (isOpen) {
+                    drawer.classList.remove('show');
+                    if (backdrop) backdrop.classList.remove('show');
+                } else {
+                    drawer.classList.add('show');
+                    if (backdrop) backdrop.classList.add('show');
+                }
+            }
+
+            function closeAllDrawers() {
+                document.querySelectorAll('.drawer').forEach(d => d.classList.remove('show'));
+                if (backdrop) backdrop.classList.remove('show');
+            }
+
+            document.querySelectorAll('[data-action="toggle-drawer"]').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('data-target');
+                    toggleDrawer(target);
+                });
+            });
+
+            document.querySelectorAll('[data-action="closedrawer"]').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('data-target');
+                    const drawer = document.getElementById(target);
+                    if (drawer) drawer.classList.remove('show');
+                    if (backdrop) backdrop.classList.remove('show');
+                });
+            });
+
+            if (backdrop) {
+                backdrop.addEventListener('click', closeAllDrawers);
+            }
+        });
+    </script>
 
     {{{ output.standard_after_main_region_html }}}
     {{{ output.standard_end_of_body_html }}}

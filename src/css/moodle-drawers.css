@@ -1,0 +1,153 @@
+/* ==========================================================================
+   World Campus Responsive Drawers & Mobile Navigation
+   ========================================================================== */
+
+/* Base Drawer Layout Structure */
+.drawer {
+  position: fixed;
+  top: 4rem; /* Below sticky navbar */
+  bottom: 0;
+  z-index: 1040;
+  width: 320px;
+  max-width: calc(100vw - 3rem);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-elevated);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s ease;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-left {
+  left: 0;
+  border-left: none;
+  transform: translateX(-100%);
+  visibility: hidden;
+}
+
+.drawer-left.show,
+.drawer-left.drawer-open {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.drawer-right {
+  right: 0;
+  border-right: none;
+  transform: translateX(100%);
+  visibility: hidden;
+}
+
+.drawer-right.show,
+.drawer-right.drawer-open {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+/* Drawer Header & Controls */
+.drawerheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.drawerheader h3,
+.drawerheader .drawertitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.drawercontent {
+  padding: 1.25rem;
+  flex: 1 1 auto;
+}
+
+.btn-drawer-close {
+  padding: 0.375rem;
+  border-radius: 0.5rem;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-drawer-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+/* Drawer Toggle Buttons Floating in Navbar/Header */
+.drawer-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.drawer-toggle-btn:hover {
+  background: var(--border-subtle);
+  color: var(--accent-cyan);
+}
+
+/* Backdrop Overlay for Mobile Drawers */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 20, 44, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1030;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.drawer-backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Desktop Persistent Layout adjustment */
+@media (min-width: 1280px) {
+  #page.show-drawer-left {
+    margin-left: 320px;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #page.show-drawer-right {
+    margin-right: 320px;
+    transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Mobile Responsive Adjustments (< 768px) */
+@media (max-width: 767px) {
+  #page {
+    padding: 1rem 0.75rem !important;
+  }
+
+  .drawer {
+    width: 280px;
+  }
+
+  .dashboard-card-img {
+    height: 140px !important;
+  }
+}

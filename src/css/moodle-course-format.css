@@ -1,0 +1,176 @@
+/* ==========================================================================
+   World Campus Course Index & Topic Course Format Styling
+   ========================================================================== */
+
+/* Course Index Sidebar (Left Drawer) */
+.courseindex {
+  padding: 0;
+  list-style: none;
+}
+
+.courseindex-section {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.75rem 0;
+}
+
+.courseindex-section-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.courseindex-section-title:hover {
+  background: var(--bg-elevated);
+}
+
+.courseindex-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.375rem 0.5rem 0.375rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+}
+
+.courseindex-item:hover {
+  color: var(--accent-cyan);
+  background: var(--bg-elevated);
+}
+
+.courseindex-item.pageitem {
+  color: var(--accent-cyan);
+  font-weight: 700;
+  background: rgba(11, 71, 127, 0.15);
+}
+
+/* Course Sections (Topics / Weeks) */
+.course-content ul.topics,
+.course-content ul.weeks,
+.course-content .format-topics,
+.course-content .format-weeks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.course-content .section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease;
+}
+
+.course-content .section.current {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px rgba(11, 71, 127, 0.2);
+}
+
+.sectionname,
+.section-title {
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Activity Items & Cards */
+.activity-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.875rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.activity-item:hover {
+  border-color: var(--accent-cyan);
+  transform: translateX(3px);
+  box-shadow: var(--shadow-card);
+}
+
+.activity-instance {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  flex: 1 1 auto;
+}
+
+.activityname {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.activityname:hover {
+  color: var(--accent-cyan);
+}
+
+/* Specific Activity Type Accent Badges */
+.modtype_assign .activity-item { border-left: 4px solid var(--navy-800); }
+.modtype_quiz .activity-item { border-left: 4px solid var(--red); }
+.modtype_forum .activity-item { border-left: 4px solid var(--accent-cyan); }
+.modtype_resource .activity-item { border-left: 4px solid var(--green); }
+.modtype_page .activity-item { border-left: 4px solid var(--muted-color); }
+.modtype_url .activity-item { border-left: 4px solid #8b5cf6; }
+.modtype_h5p .activity-item { border-left: 4px solid #ec4899; }
+
+/* Activity Completion Controls */
+.activity-completion,
+.completion-info {
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-completion {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-completion.completed,
+.btn-completion[data-completionstate="1"] {
+  background: rgba(22, 129, 93, 0.15);
+  color: var(--green);
+  border-color: rgba(22, 129, 93, 0.3);
+}
+
+/* Availability & Restriction Badges */
+.availabilityinfo {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.375rem;
+}
