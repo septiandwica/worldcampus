@@ -1,34 +1,63 @@
+{{!
+    @template theme_worldcampus/head
+}}
 {{{ output.doctype }}}
-<html {{{ output.htmlattributes }}} data-theme="dark">
+<html {{{ output.htmlattributes }}} {{#themepreference}}data-theme="{{.}}"{{/themepreference}}>
 <head>
+    <script>
+        (function() {
+            const getSavedTheme = () => {
+                let theme = 'light';
+                try {
+                    theme = localStorage.getItem('worldcampus_theme_preference');
+                    if (theme) return theme;
+                } catch (e) {}
+                
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    let c = cookies[i].trim();
+                    if (c.indexOf('worldcampus_theme_preference=') === 0) {
+                        return c.substring('worldcampus_theme_preference='.length, c.length);
+                    }
+                }
+                return 'light';
+            };
+            const applyTheme = () => {
+                const theme = getSavedTheme();
+                const isDark = theme === 'dark' || (theme === 'auto' && (window.matchMedia('(prefers-color-scheme: dark)').matches || document.documentElement.getAttribute('data-bs-theme') === 'dark'));
+                if (isDark) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            };
+            applyTheme();
+            
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && (mutation.attributeName === 'data-theme' || mutation.attributeName === 'data-bs-theme')) {
+                        const theme = getSavedTheme();
+                        if (theme === 'auto') return;
+                        
+                        const isDark = theme === 'dark';
+                        const hasAttr = document.documentElement.hasAttribute('data-theme');
+                        if (isDark && !hasAttr) {
+                            document.documentElement.setAttribute('data-theme', 'dark');
+                        } else if (!isDark && hasAttr) {
+                            document.documentElement.removeAttribute('data-theme');
+                        }
+                    }
+                });
+            });
+            observer.observe(document.documentElement, { attributes: true });
+        })();
+    </script>
     <title>{{{ output.page_title }}}</title>
     <link rel="shortcut icon" href="{{{ output.favicon }}}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Direct Link to Compiled World Campus Stylesheet -->
     <link rel="stylesheet" type="text/css" href="{{{ config.wwwroot }}}/theme/worldcampus/style/worldcampus.css">
-
-    <script>
-        (function() {
-            try {
-                const savedTheme = localStorage.getItem('worldcampus_theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-                document.documentElement.setAttribute('data-theme', theme);
-                if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            } catch (e) {}
-        })();
-    </script>
-    
-    <!-- React 19 + Shadcn UI Bundle for World Campus -->
-    <script defer src="{{{ config.wwwroot }}}/theme/worldcampus/style/worldcampus.bundle.js"></script>
-
     {{{ output.standard_head_html }}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
