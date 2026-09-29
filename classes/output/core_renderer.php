@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * World Campus theme custom core renderer.
+ * World Campus theme custom core renderer extending Boost.
  *
  * @package   theme_worldcampus
  * @copyright 2026 Septian Dwi Cahyo (@septian.dwica)
@@ -26,15 +26,15 @@ namespace theme_worldcampus\output;
 
 defined('MOODLE_INTERNAL') || die();
 
-use core_renderer as base_core_renderer;
+use theme_boost\output\core_renderer as boost_core_renderer;
 use moodle_url;
 use html_writer;
 use custom_menu;
 
 /**
- * World Campus core renderer for standalone theme.
+ * World Campus core renderer extending Boost.
  */
-class core_renderer extends base_core_renderer {
+class core_renderer extends boost_core_renderer {
 
     /**
      * Renders the custom page full header with breadcrumbs and title.

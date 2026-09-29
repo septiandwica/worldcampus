@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * World Campus theme configuration.
+ * World Campus theme configuration extending Boost with React 19 + Shadcn UI + Tailwind CSS.
  *
  * @package   theme_worldcampus
  * @copyright 2026 Septian Dwi Cahyo (@septian.dwica)
@@ -28,11 +28,15 @@ require_once(__DIR__ . '/lib.php');
 
 $THEME->name = 'worldcampus';
 
-// Standalone: Pure Tailwind CSS compiled into style/worldcampus.css
-$THEME->sheets = ['worldcampus'];
-$THEME->editor_sheets = ['editor'];
-$THEME->parents = []; // Standalone theme without theme_boost
-$THEME->enable_dock = false;
+// Extend from Boost for 100% core Moodle stability
+$THEME->parents = ['boost'];
+
+// Sheets & SCSS
+$THEME->sheets = [];
+$THEME->editor_sheets = [];
+$THEME->usefallback = false;
+
+// Renderer factory
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->iconsystem = \core\output\icon_system::FONTAWESOME;
 $THEME->haseditswitch = true;
@@ -40,7 +44,7 @@ $THEME->usescourseindex = true;
 
 // Layout definitions
 $THEME->layouts = [
-    // Base layout without blocks
+    // Base layout
     'base' => [
         'file' => 'drawers.php',
         'regions' => [],
@@ -51,7 +55,7 @@ $THEME->layouts = [
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
     ],
-    // Course main view (full custom)
+    // Course main view
     'course' => [
         'file' => 'course.php',
         'regions' => ['side-pre', 'content'],
@@ -66,7 +70,7 @@ $THEME->layouts = [
     ],
     // In-course activity view (Quiz, Assignment, Lesson, Resource)
     'incourse' => [
-        'file' => 'course.php',
+        'file' => 'incourse.php',
         'regions' => ['side-pre'],
         'defaultregion' => 'side-pre',
     ],

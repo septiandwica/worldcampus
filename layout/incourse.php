@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * World Campus Theme Version.
+ * World Campus incourse layout for activity modules.
  *
  * @package   theme_worldcampus
  * @copyright 2026 Septian Dwi Cahyo (@septian.dwica)
@@ -24,12 +24,16 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'theme_worldcampus';
-$plugin->version   = 2026092902;
-$plugin->release   = '1.1.0';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->requires  = 2022041900; // Compatible with Moodle 4.0+ & 5.0
+require_once($CFG->libdir . '/behat/lib.php');
+require_once($CFG->dirroot . '/course/lib.php');
 
-$plugin->dependencies = [
-    'theme_boost' => 2022041900,
+$bodyattributes = $OUTPUT->body_attributes(['worldcampus-incourse', 'min-h-screen', 'flex', 'flex-col']);
+
+$templatecontext = [
+    'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID)]),
+    'output' => $OUTPUT,
+    'bodyattributes' => $bodyattributes,
+    'user_menu' => $OUTPUT->user_menu(),
 ];
+
+echo $OUTPUT->render_from_template('theme_worldcampus/incourse', $templatecontext);
